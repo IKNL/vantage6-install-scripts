@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #######################################
-# Bash script to verify that the installation script was successful. 
+# Bash script to verify that the installation script was successful.
 # Run with 'bash installation-verification.sh'
 # Written by Frank and Anja from IKNL
 #######################################
@@ -11,6 +11,7 @@ touch $REPORT
 
 ## Installed packages ##
 echo '## Check installed packages ##' >> $REPORT
+conda activate vantage6
 pip list >> $REPORT
 docker info >> $REPORT
 
