@@ -2,7 +2,7 @@
 
 #######################################
 # Bash script to install apps on a new system (Ubuntu)
-# Run with 'bash install-apps.sh'
+# Run with 'bash vantage6.sh'
 # Written by Frank and Anja from IKNL
 #######################################
 
@@ -15,13 +15,11 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo '###Update/upgrade system'
 apt-get update -y
 apt-get upgrade -y
-apt-get install curl -y
-apt-get install wget -y
 apt-get install systemd -y
 
 
 echo '###Installing miniconda'
-# download installer script
+# installer script downloaded from:
 # curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
 # add execution permissions
 chmod +x $SCRIPT_DIR/get-miniconda.sh
@@ -47,18 +45,18 @@ pip install vantage6==$VANTAGE6_VERSION
 
 ## Docker ##
 echo '###Installing Docker..'
-#sudo DRY_RUN=1 sh get-docker.sh
+# installer script downloaded from: https://get.docker.com/
 chmod +x $SCRIPT_DIR/get-docker.sh
 bash $SCRIPT_DIR/get-docker.sh
-
 # Manage Docker as a non-root user
 echo '##Manage Docker as a non-root user..'
 # Create the docker group
 getent group docker || groupadd docker
 # Add your user to the docker group
 usermod -aG docker $USER
-# Activate the changes to groups
-newgrp docker
 
-echo '###Rebooting system now.'
+
+## Reboot ##
+echo '###Rebooting system in 10 seconds.'
+sleep 10
 reboot
