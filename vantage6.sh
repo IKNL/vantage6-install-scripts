@@ -51,7 +51,7 @@ bash $SCRIPT_DIR/get-docker.sh
 # Manage Docker as a non-root user
 echo '##Manage Docker as a non-root user..'
 # Create the docker group
-getent group docker || groupadd docker
+groupadd docker
 # Add your user to the docker group
 usermod -aG docker $USER
 
