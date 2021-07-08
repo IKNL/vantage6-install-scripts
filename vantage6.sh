@@ -58,5 +58,14 @@ usermod -aG docker $USER
 
 ## Reboot ##
 echo '###Rebooting system in 10 seconds.'
-sleep 10
+for i in {10..1..1}
+    do
+        echo -en "\rRebooting in $i seconds .. "
+        if [ $i -eq 1 ]
+        then
+            echo -en "\rRebooting in $i second ..   "
+        fi
+        sleep 1
+    done
+echo -en "\rBye bye.                      "
 reboot
