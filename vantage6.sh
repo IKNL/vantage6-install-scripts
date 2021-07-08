@@ -6,8 +6,8 @@
 # Written by Frank and Anja from IKNL
 #######################################
 
-VENV = vantage6
-VANTAGE6_VERSION = 2.1.0
+VENV=vantage6
+VANTAGE6_VERSION=2.1.0
 
 
 ## Update packages and Upgrade system
@@ -21,7 +21,7 @@ apt-get install systemd -y
 
 echo '###Installing miniconda'
 # download installer script
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
+curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
 # add execution permissions
 chmod +x ~/miniconda.sh
 # install miniconda
@@ -59,7 +59,7 @@ fi
 # Manage Docker as a non-root user
 echo '##Manage Docker as a non-root user..'
 # Create the docker group
-groupadd docker
+getent group docker|| groupadd docker
 # Add your user to the docker group
 usermod -aG docker $USER
 # Activate the changes to groups
@@ -67,4 +67,4 @@ newgrp docker
 
 # Verify that you can run docker commands without sudo
 echo '##Run hello-world (without sudo)..'
-run hello-world
+docker run hello-world
