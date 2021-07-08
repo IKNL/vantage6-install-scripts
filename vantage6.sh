@@ -44,18 +44,12 @@ conda activate $VENV
 echo '###Installing vantage6 $VANTAGE6_VERSION ..'
 pip install vantage6==$VANTAGE6_VERSION
 
+
 ## Docker ##
 echo '###Installing Docker..'
-
 #sudo DRY_RUN=1 sh get-docker.sh
 chmod +x $SCRIPT_DIR/get-docker.sh
 bash $SCRIPT_DIR/get-docker.sh
-
-#check that docker is running
-if [ "$(systemctl is-active docker)" = "active" ]
-then echo '[OK] docker is running'
-else echo '[ERR] docker is not  running...'
-fi
 
 # Manage Docker as a non-root user
 echo '##Manage Docker as a non-root user..'
@@ -66,6 +60,5 @@ usermod -aG docker $USER
 # Activate the changes to groups
 newgrp docker
 
-# Verify that you can run docker commands without sudo
-echo '##Run hello-world (without sudo)..'
-docker run hello-world
+echo '###Rebooting system now.'
+reboot
