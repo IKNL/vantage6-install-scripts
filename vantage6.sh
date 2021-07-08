@@ -8,6 +8,7 @@
 
 VENV=vantage6
 VANTAGE6_VERSION=2.1.0
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 
 ## Update packages and Upgrade system
@@ -21,11 +22,11 @@ apt-get install systemd -y
 
 echo '###Installing miniconda'
 # download installer script
-curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
+# curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
 # add execution permissions
-chmod +x ~/miniconda.sh
+chmod +x $SCRIPT_DIR/get-miniconda.sh
 # install miniconda
-bash ~/miniconda.sh -b -p $HOME/miniconda
+bash $SCRIPT_DIR/get-miniconda.sh -b -p $HOME/miniconda
 # activate conda in this shell
 eval "$($HOME/miniconda/bin/conda shell.bash hook)"
 # initialize conda
@@ -45,10 +46,10 @@ pip install vantage6==$VANTAGE6_VERSION
 
 ## Docker ##
 echo '###Installing Docker..'
-curl -fsSL https://get.docker.com -o ~/get-docker.sh
+
 #sudo DRY_RUN=1 sh get-docker.sh
-chmod +x ~/get-docker.sh
-sh ~/get-docker.sh
+chmod +x $SCRIPT_DIR/get-docker.sh
+bash $SCRIPT_DIR/get-docker.sh
 
 #check that docker is running
 if [ "$(systemctl is-active docker)" = "active" ]
@@ -59,7 +60,7 @@ fi
 # Manage Docker as a non-root user
 echo '##Manage Docker as a non-root user..'
 # Create the docker group
-getent group docker|| groupadd docker
+getent group docker || groupadd docker
 # Add your user to the docker group
 usermod -aG docker $USER
 # Activate the changes to groups
