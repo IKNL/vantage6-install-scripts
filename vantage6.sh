@@ -9,7 +9,7 @@
 VENV=vantage6
 VANTAGE6_VERSION=2.1.0
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
+LOGNAME="$(logname)"
 
 ## Update packages and Upgrade system
 echo '###Update/upgrade system'
@@ -52,9 +52,9 @@ bash $SCRIPT_DIR/get-docker.sh
 echo '##Manage Docker as a non-root user..'
 # Create the docker group
 groupadd docker
-# Add your user to the docker group
+# Add your user and root to the docker group
 usermod -aG docker $USER
-
+usermod -aG docker $LOGNAME
 
 ## Reboot ##
 echo '###Rebooting system in 10 seconds.'
