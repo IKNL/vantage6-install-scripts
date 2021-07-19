@@ -12,7 +12,7 @@ touch $REPORT
 ## Installed packages ##
 echo '## Check installed packages ##' >> $REPORT
 # conda is not available by default in subshells
-source ~/miniconda3/etc/profile.d/conda.sh
+source ~/miniconda/etc/profile.d/conda.sh
 conda activate vantage6
 pip list >> $REPORT
 docker info >> $REPORT
