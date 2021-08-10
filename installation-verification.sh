@@ -6,7 +6,7 @@
 # Written by Frank and Anja from IKNL
 #######################################
 
-REPORT=installation-report.txt
+REPORT=installation-verification-report.txt
 touch $REPORT
 
 ## Installed packages ##

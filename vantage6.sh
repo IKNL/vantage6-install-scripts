@@ -10,12 +10,14 @@ VENV=vantage6
 VANTAGE6_VERSION=2.1.0
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOGNAME="$(logname)"
+REPORT=installation-report.txt
+touch $REPORT
 
 ## Update packages and Upgrade system
 echo '###Update/upgrade system'
-apt-get update -y
-apt-get upgrade -y
-apt-get install systemd -y
+apt-get update -y >> $REPORT
+apt-get upgrade -y >> $REPORT
+apt-get install systemd -y >> $REPORT
 
 
 echo '###Installing miniconda'
@@ -24,30 +26,30 @@ echo '###Installing miniconda'
 # add execution permissions
 chmod +x $SCRIPT_DIR/get-miniconda.sh
 # install miniconda
-bash $SCRIPT_DIR/get-miniconda.sh -b -p $HOME/miniconda
+bash $SCRIPT_DIR/get-miniconda.sh -b -p $HOME/miniconda >> $REPORT
 # activate conda in this shell
 eval "$($HOME/miniconda/bin/conda shell.bash hook)"
 # initialize conda
-conda init
+conda init >> $REPORT
 
 
 echo '###Configuring conda'
 # create python virtual environment with python 3.7!
-conda create -n $VENV python=3.7 -y
+conda create -n $VENV python=3.7 -y >> $REPORT
 # activate environment
 conda activate $VENV
 
 
 ## vantage6 ##
 echo '###Installing vantage6 $VANTAGE6_VERSION ..'
-pip install vantage6==$VANTAGE6_VERSION
+pip install vantage6==$VANTAGE6_VERSION >> $REPORT
 
 
 ## Docker ##
 echo '###Installing Docker..'
 # installer script downloaded from: https://get.docker.com/
 chmod +x $SCRIPT_DIR/get-docker.sh
-bash $SCRIPT_DIR/get-docker.sh
+$SCRIPT_DIR/get-docker.sh >> $REPORT
 # Manage Docker as a non-root user
 echo '##Manage Docker as a non-root user..'
 # Create the docker group
@@ -67,5 +69,5 @@ for i in {10..1..1}
         fi
         sleep 1
     done
-echo -en "\rBye bye.                      "
+echo -en "\rBye bye.                       "
 reboot
