@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #######################################
-# Bash script to verify that the installation script was successful.
-# Run with 'bash installation-verification.sh'
+# Bash script to verify that the installation script (vantage6.sh) was successful.
+# Run with 'sudo -E bash installation-verification.sh'
 # Written by Frank and Anja from IKNL
 #######################################
 
-REPORT=installation-verification-report.txt
+REPORT=vantage6-installation-verification-report.txt
 touch $REPORT
 
 ## Installed packages ##
-echo '## Check installed packages ##' >> $REPORT
+echo '## Check installed packages ##' > $REPORT
 # conda is not available by default in subshells
 source ~/miniconda/etc/profile.d/conda.sh
 conda activate vantage6

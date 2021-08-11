@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #######################################
-# Bash script to install apps on a new system (Ubuntu)
-# Run with 'bash vantage6.sh'
+# Bash script to setup a new system (Ubuntu 18.04) for vantage6.
+# Key components: apt-get, miniconda, virtual environment, docker, vantage6.
+# Run with 'sudo -E bash vantage6.sh'
 # Written by Frank and Anja from IKNL
 #######################################
 
@@ -10,17 +11,17 @@ VENV=vantage6
 VANTAGE6_VERSION=2.1.0
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOGNAME="$(logname)"
-REPORT=installation-report.txt
+REPORT=vantage6-installation-report.txt
 touch $REPORT
 
 ## Update packages and Upgrade system
-echo '###Update/upgrade system'
+echo '###Update/upgrade system' > $REPORT
 apt-get update -y >> $REPORT
 apt-get upgrade -y >> $REPORT
 apt-get install systemd -y >> $REPORT
 
 
-echo '###Installing miniconda'
+echo '###Installing miniconda' >> $REPORT
 # installer script downloaded from:
 # curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
 # add execution permissions
@@ -33,19 +34,19 @@ eval "$($HOME/miniconda/bin/conda shell.bash hook)"
 conda init >> $REPORT
 
 
-echo '###Configuring conda'
+echo '###Creating a virtual environment' >> $REPORT
 # create python virtual environment with python 3.7!
 conda create -n $VENV python=3.7 -y >> $REPORT
 # activate environment
 conda activate $VENV
 
 
-## vantage6 ##
+## vantage6 ## >> $REPORT
 echo '###Installing vantage6 $VANTAGE6_VERSION ..'
 pip install vantage6==$VANTAGE6_VERSION >> $REPORT
 
 
-## Docker ##
+## Docker ## >> $REPORT
 echo '###Installing Docker..'
 # installer script downloaded from: https://get.docker.com/
 chmod +x $SCRIPT_DIR/get-docker.sh
