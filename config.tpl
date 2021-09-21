@@ -16,7 +16,7 @@ application:
     use_console: true
   port: '443'
   server_url: https://harukas.vantage6.ai
-  task_dir: 
+  task_dir: ${TASK_DIR}
 environments:
   acc: {}
   dev: {}
