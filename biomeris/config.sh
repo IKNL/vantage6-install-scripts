@@ -23,4 +23,4 @@ echo "REDCap token: $RC_TOKEN"
 
 cp proto_config.properties config.properties
 envsubst < config.properties
-mv config.properties test
+mv config.properties /opt/redcap_dq/environment/config
