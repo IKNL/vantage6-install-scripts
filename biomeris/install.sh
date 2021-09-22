@@ -46,6 +46,17 @@ sudo su - -c "R -e \"install.packages('devtools', repos='http://cran.rstudio.com
 # 
 # sudo gdebi rstudio-server-0.99.903-amd64.deb
 
+#Packages needed by DQ scripts
+sudo su - -c "R -e \"install.packages('REDCapR', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('plyr', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('dplyr', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('openxlsx', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('properties', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('prodlim', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('data.table', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('formattable', repos='http://cran.rstudio.com/')\"" >> $REPORT
+
+
 mkdir /opt/redcap_dq
 mkdir /opt/redcap_dq/environment
 mkdir /opt/redcap_dq/environment/data
@@ -54,6 +65,7 @@ mkdir /opt/redcap_dq/environment/psets
 mkdir /opt/redcap_dq/environment/reports
 mkdir /opt/redcap_dq/environment/scripts
 mkdir /opt/redcap_dq/environment/test
+mkdir /opt/redcap_dq/environment/config
 
 mkdir /opt/redcap_dq/engine
 
@@ -69,3 +81,5 @@ service cron restart >> $REPORT
 #TODO (maybe)
 #-store an ENV variable which represents the site ID? (this may be used if we eant to (re)execute am R script only for a group of sites)
 #-mechanism to execute scripts only once (within the "engine" or in the scripts themselves)
+
+bash config.sh
