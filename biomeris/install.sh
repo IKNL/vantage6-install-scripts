@@ -59,13 +59,14 @@ sudo su - -c "R -e \"install.packages('formattable', repos='http://cran.rstudio.
 
 mkdir /opt/redcap_dq
 mkdir /opt/redcap_dq/environment
+mkdir /opt/redcap_dq/environment/config
 mkdir /opt/redcap_dq/environment/data
 mkdir /opt/redcap_dq/environment/logs
-mkdir /opt/redcap_dq/environment/psets
-mkdir /opt/redcap_dq/environment/reports
 mkdir /opt/redcap_dq/environment/scripts
 mkdir /opt/redcap_dq/environment/test
-mkdir /opt/redcap_dq/environment/config
+
+touch /opt/redcap_dq/environment/logs/log.txt
+touch /opt/redcap_dq/environment/logs/history.txt
 
 mkdir /opt/redcap_dq/engine
 
