@@ -55,6 +55,7 @@ sudo su - -c "R -e \"install.packages('properties', repos='http://cran.rstudio.c
 sudo su - -c "R -e \"install.packages('prodlim', repos='http://cran.rstudio.com/')\"" >> $REPORT
 sudo su - -c "R -e \"install.packages('data.table', repos='http://cran.rstudio.com/')\"" >> $REPORT
 sudo su - -c "R -e \"install.packages('formattable', repos='http://cran.rstudio.com/')\"" >> $REPORT
+sudo su - -c "R -e \"install.packages('readtext', repos='http://cran.rstudio.com/')\"" >> $REPORT
 
 
 mkdir /opt/redcap_dq
