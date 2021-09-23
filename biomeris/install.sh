@@ -61,7 +61,7 @@ mkdir /opt/redcap_dq/environment/config
 mkdir /opt/redcap_dq/environment/data
 mkdir /opt/redcap_dq/environment/logs
 mkdir /opt/redcap_dq/environment/scripts
-mkdir /opt/redcap_dq/environment/test
+#mkdir /opt/redcap_dq/environment/test
 
 touch /opt/redcap_dq/environment/logs/log.txt
 touch /opt/redcap_dq/environment/logs/history.txt
