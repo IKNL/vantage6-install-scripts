@@ -50,6 +50,9 @@ sudo su - -c "R -e \"install.packages('data.table', repos='http://cran.rstudio.c
 echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('formattable', repos='http://cran.rstudio.com/')\"" &>> $REPORT
 echo "...still in progress..."
+sudo add-apt-repository -y ppa:cran/poppler &>> $REPORT
+sudo apt-get update &>> $REPORT
+sudo apt-get install -y libpoppler-cpp-dev &>> $REPORT
 sudo su - -c "R -e \"install.packages('readtext', repos='http://cran.rstudio.com/')\"" &>> $REPORT
 echo "...R packages installed."
 
