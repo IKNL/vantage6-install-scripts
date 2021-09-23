@@ -29,27 +29,27 @@ echo "...R installed."
 
 echo "STEP 3/6"
 echo "R packages installing..."
-echo "this may take time"
+echo "...this may take time..."
 #Devtools
 sudo su - -c "R -e \"install.packages('devtools', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 #Packages needed by DQ scripts
 sudo su - -c "R -e \"install.packages('REDCapR', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('plyr', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('dplyr', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('openxlsx', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('properties', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('prodlim', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('data.table', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('formattable', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "still in progress..."
+echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('readtext', repos='http://cran.rstudio.com/')\"" &>> $REPORT
 echo "...R packages installed."
 
@@ -86,3 +86,5 @@ echo "Site DQ configuration..."
 BIOMDIR=$(dirname "$0")
 bash $BIOMDIR/config.sh
 echo "Site DQ configured"
+echo ""
+echo ""
