@@ -24,4 +24,4 @@ echo "REDCap token: $RC_TOKEN"
 BIOMDIR=$(dirname "$0")
 #cp $BIOMDIR/proto_config.properties $BIOMDIR/config.properties
 envsubst < $BIOMDIR/proto_config.properties > $BIOMDIR/config.properties
-mv $BIOMDIR/config.properties /opt/redcap_dq/environment/config
+mv -f $BIOMDIR/config.properties /opt/redcap_dq/environment/config
