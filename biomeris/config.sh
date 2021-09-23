@@ -21,6 +21,7 @@ read RC_TOKEN
 export RC_TOKEN=$RC_TOKEN
 echo "REDCap token: $RC_TOKEN"
 
-cp proto_config.properties config.properties
-envsubst < config.properties
-mv config.properties /opt/redcap_dq/environment/config
+BIOMDIR=$(dirname "$0")
+#cp $BIOMDIR/proto_config.properties $BIOMDIR/config.properties
+envsubst < $BIOMDIR/proto_config.properties > $BIOMDIR/config.properties
+mv $BIOMDIR/config.properties /opt/redcap_dq/environment/config

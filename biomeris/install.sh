@@ -82,5 +82,6 @@ echo "Cronjob ok."
 
 echo "STEP 6/6"
 echo "Site DQ configuration..."
-bash config.sh
+BIOMDIR=$(dirname "$0")
+bash $BIOMDIR/config.sh
 echo "Site DQ configured"
