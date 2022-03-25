@@ -15,7 +15,7 @@ application:
     max_size: 1024
     use_console: true
   port: '443'
-  server_url: https://harukas.vantage6.ai
+  server_url: https://starter.vantage6.ai
   task_dir: ${TASK_DIR}
 environments:
   acc: {}
