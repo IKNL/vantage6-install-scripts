@@ -8,7 +8,7 @@
 #######################################
 
 VENV=vantage6
-VANTAGE6_VERSION=2.1.1
+VANTAGE6_VERSION=2.2.12
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOGNAME="$(logname)"
 REPORT=vantage6-installation-report.txt
