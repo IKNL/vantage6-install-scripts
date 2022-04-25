@@ -9,7 +9,7 @@ mkdir -p $TASK_DIR
 
 echo "> Creating dummy data file"
 touch $DATA_FILE
-echo 'Sex,Age' >> $DATA_FILE
+echo 'Sex,Age' > $DATA_FILE
 echo 'm,21' >> $DATA_FILE
 echo 'f,19' >> $DATA_FILE
 
