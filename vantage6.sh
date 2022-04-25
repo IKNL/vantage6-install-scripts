@@ -7,6 +7,14 @@
 # Written by Frank and Anja from IKNL
 #######################################
 
+command_exists() {
+	command -v "$@" > /dev/null 2>&1
+}
+
+has_conda_env(){
+    conda env list | grep "${@}" >/dev/null 2>/dev/null
+}
+
 VENV=vantage6
 VANTAGE6_VERSION=2.1.1
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -21,23 +29,32 @@ apt-get update -y >> $REPORT
 apt-get upgrade -y >> $REPORT
 apt-get install systemd -y >> $REPORT
 
-echo '(2/6) ###Installing miniconda'
-echo '###Installing miniconda' >> $REPORT
-# installer script downloaded from:
-# curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
-# add execution permissions
-chmod +x $SCRIPT_DIR/get-miniconda.sh
-# install miniconda
-bash $SCRIPT_DIR/get-miniconda.sh -b -p $HOME/miniconda >> $REPORT
+if ! command_exists conda; then
+    echo '(2/6) ###Installing miniconda'
+    echo '###Installing miniconda' >> $REPORT
+    # installer script downloaded from:
+    # curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
+    # add execution permissions
+    chmod +x $SCRIPT_DIR/get-miniconda.sh
+    # install miniconda
+    bash $SCRIPT_DIR/get-miniconda.sh -b -p $HOME/miniconda >> $REPORT
+else
+    echo "Skipping Miniconda installation, is already installed" >> $REPORT
+fi
+
 # activate conda in this shell
 eval "$($HOME/miniconda/bin/conda shell.bash hook)"
 # initialize conda
 conda init >> $REPORT
 
-echo '(3/6) ###Creating a virtual environment'
-echo '###Creating a virtual environment' >> $REPORT
-# create python virtual environment with python 3.7!
-conda create -n $VENV python=3.7 -y >> $REPORT
+if ! has_conda_env ".*$VENV.*"; then
+    echo '(3/6) ###Creating a virtual environment'
+    echo '###Creating a virtual environment' >> $REPORT
+    # create python virtual environment with python 3.7!
+    conda create -n $VENV python=3.7 -y >> $REPORT
+else
+    echo "Using existing virtual environment $VENV" >> $REPORT
+fi
 # activate environment
 conda activate $VENV
 
@@ -49,17 +66,26 @@ pip install vantage6==$VANTAGE6_VERSION >> $REPORT
 
 
 ## Docker ## >> $REPORT
-echo '(5/6) ###Installing Docker..'
-echo '###Installing Docker..' >> $REPORT
-# installer script downloaded from: https://get.docker.com/
-chmod +x $SCRIPT_DIR/get-docker.sh
-$SCRIPT_DIR/get-docker.sh >> $REPORT
+if ! command_exists docker; then
+    echo '(5/6) ###Installing Docker..'
+    echo '###Installing Docker..' >> $REPORT
+    # installer script downloaded from: https://get.docker.com/
+    chmod +x $SCRIPT_DIR/get-docker.sh
+    $SCRIPT_DIR/get-docker.sh >> $REPORT
+else
+    echo "Docker is already installed!" >> $REPORT
+fi
+
 # Manage Docker as a non-root user
 echo '(6/6) ###Manage Docker as a non-root user..'
 echo '###Manage Docker as a non-root user..' >> $REPORT
 # Create the docker group
-groupadd docker
+if [ ! $(getent group docker) ]; then
+    echo "Group docker added" >> $REPORT
+    groupadd docker
+fi
 # Add your user and root to the docker group
+# TODO check if they already exist!
 usermod -aG docker $USER
 usermod -aG docker $LOGNAME
 
