@@ -52,12 +52,10 @@ sudo su - -c "R -e \"install.packages('formattable', repos='http://cran.rstudio.
 echo "...still in progress..."
 sudo su - -c "R -e \"install.packages('gtools', repos='http://cran.rstudio.com/')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('readtext', repos='http://cran.rstudio.com/')\"" &>> $REPORT
-echo "...still in progress..."
 sudo add-apt-repository -y ppa:cran/poppler &>> $REPORT
 sudo apt-get update &>> $REPORT
 sudo apt-get install -y libpoppler-cpp-dev &>> $REPORT
-sudo su - -c "R -e \"install.packages('readtext', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('rjson', version = '0.2.20', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...R packages installed."
 
 echo "STEP 4/6"
