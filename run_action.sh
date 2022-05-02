@@ -62,7 +62,7 @@ for action in `echo "$actions" | jq -r '.[] | @base64'`; do
     fi
 
     echo "Executing action: ${descr}" | tee -a $REPORT
-    bash $command  #TODO test with arguments to the script
+    bash "${SCRIPT_DIR}/$command"  #TODO test with arguments to the script
 
     # Add command to completed actions if it succeeded
     status=$?
