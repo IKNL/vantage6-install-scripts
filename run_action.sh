@@ -51,9 +51,9 @@ json_data=`cat "$ACTIONS_JSON" | jq '.'`
 # Execute actions
 echo "Extracting actions to perform..." | tee -a $REPORT
 actions=`echo "$json_data" | jq '.actions'`
-for action in `echo $actions | jq -c '.[]'`; do
-    descr=`echo $action | jq '.description'`
-    command=`echo $action | jq '.command'`
+for action in `echo "$actions" | jq -r '.[] | @base64'`; do
+    descr=`echo "$action" | base64 --decode | jq '.description'`
+    command=`echo "$action" | base64 --decode | jq '.command'`
     # TODO maybe include a timestamp here? That would make it easier to do
     # certain actions a number of times
     if `grep -q "$command" $ACTIONS_LOG`; then
