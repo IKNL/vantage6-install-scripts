@@ -8,9 +8,9 @@
 
 # define constants
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ACTIONS_JSON = "${SCRIPT_DIR}/actions.json"
+ACTIONS_JSON="${SCRIPT_DIR}/actions.json"
 
-LOG_DIR = "${SCRIPT_DIR}/log"
+LOG_DIR="${SCRIPT_DIR}/log"
 ACTIONS_LOG="${LOG_DIR}/actions_performed.v6"
 LAST_RESTART="${LOG_DIR}/last_restart.v6"
 NODE_ID_FILE="${LOG_DIR}/node_id.v6"
