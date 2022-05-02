@@ -31,32 +31,32 @@ echo "STEP 3/6"
 echo "R packages installing..."
 echo "...this may take time..."
 #Devtools
-sudo su - -c "R -e \"install.packages('devtools', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"install.packages('https://cran.r-project.org/src/contrib/Archive/devtools/devtools_2.4.2.tar.gz', repos = NULL, type = 'source')\"" &>> $REPORT
 echo "...still in progress..."
 #Packages needed by DQ scripts
-sudo su - -c "R -e \"install.packages('REDCapR', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('REDCapR', version = '1.0.0', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('plyr', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('plyr', version = '1.8.6', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('dplyr', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('dplyr', version = '1.0.8', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('openxlsx', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('openxlsx', version = '4.2.4', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('properties', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('properties', version = '0.0.9', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('prodlim', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('prodlim', version = '2019.11.13', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('data.table', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('data.table', version = '1.14.2', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('formattable', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('formattable', version = '0.2.1', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo su - -c "R -e \"install.packages('gtools', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('gtools', version = '3.9.2', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
 sudo add-apt-repository -y ppa:cran/poppler &>> $REPORT
 sudo apt-get update &>> $REPORT
 sudo apt-get install -y libpoppler-cpp-dev &>> $REPORT
 sudo su - -c "R -e \"devtools::install_version('rjson', version = '0.2.20', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
-sudo su - -c "R -e \"install.packages('readtext', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+sudo su - -c "R -e \"devtools::install_version('readtext', version = '0.81', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...R packages installed."
 
 echo "STEP 4/6"
