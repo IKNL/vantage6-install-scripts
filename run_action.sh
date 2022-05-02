@@ -62,7 +62,7 @@ for action in `echo $actions | jq -c '.[]'`; do
     fi
 
     echo "Executing action: ${descr}" | tee -a $REPORT
-    $command  #TODO test with arguments to the script
+    bash $command  #TODO test with arguments to the script
 
     # Add command to completed actions if it succeeded
     status=$?

@@ -1,12 +1,12 @@
 {
     "actions": [
         {
-            "description": "",
-            "command": "./vantage6.sh"
+            "description": "Install vantage6",
+            "command": "vantage6.sh"
         },
         {
-            "description": "",
-            "command": "./configure-node.sh"
+            "description": "Configure the node",
+            "command": "configure-node.sh"
         }
     ],
     "restart":
