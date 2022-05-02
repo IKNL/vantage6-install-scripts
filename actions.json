@@ -2,23 +2,18 @@
     "actions": [
         {
             "description": "",
-            "id": 1,
-            "files": ["vantage6.sh"],
-            "arguments": [[]],
-            "type": ["bash"]
+            "command": "./vantage6.sh"
         },
         {
             "description": "",
-            "id": 2,
-            "files": ["configure-node.sh"],
-            "arguments": [[]]
+            "command": "./configure-node.sh"
         }
     ],
     "restart":
     [
        {
            "node_ids": [1],
-           "timestamp": "2020-01-01:12.00.00"
+           "timestamp": "2020-01-01 12:00:00"
        }
     ]
 }
