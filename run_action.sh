@@ -52,8 +52,12 @@ json_data=`cat "$ACTIONS_JSON" | jq '.'`
 echo "Extracting actions to perform..." | tee -a $REPORT
 actions=`echo "$json_data" | jq '.actions'`
 for action in `echo "$actions" | jq -r '.[] | @base64'`; do
+    # notes:
+    # encoding/decoding base64 is to prevent issues with spaces in the variables
+    # sed is used to delete double quotes around script names
     descr=`echo "$action" | base64 --decode | jq '.description'`
-    command=`echo "$action" | base64 --decode | jq '.command'`
+    command=`echo "$action" | base64 --decode | jq '.command' |
+             sed -e 's/^"//' -e 's/"$//'`
     # TODO maybe include a timestamp here? That would make it easier to do
     # certain actions a number of times
     if `grep -q "$command" $ACTIONS_LOG`; then
