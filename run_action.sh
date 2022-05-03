@@ -79,7 +79,8 @@ done
 # Execute restarts
 restarts=`echo "$json_data" | jq '.restart'`
 for restart in `echo $restarts | jq -r '.[] | @base64'`; do
-    for node_id in `echo $restart | base64 --decode | jq '.node_ids'`; do
+    node_ids=`echo $restart | base64 --decode | jq -c '.node_ids'`
+    for node_id in `echo $node_ids | jq -c '.[]'`; do
         if `grep -q $node_id $NODE_ID_FILE`; then
             timestamp=`echo $restart | jq '.timestamp'`
             last_restart=`head -n 1 $LAST_RESTART`
@@ -96,3 +97,9 @@ for restart in `echo $restarts | jq -r '.[] | @base64'`; do
         fi
     done
 done
+
+echo "" | tee -a $REPORT
+echo "" | tee -a $REPORT
+echo "Congratulations, you're all set up!" | tee -a $REPORT
+echo "" | tee -a $REPORT
+echo "" | tee -a $REPORT

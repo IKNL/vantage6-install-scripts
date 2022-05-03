@@ -20,7 +20,7 @@
     "restart":
     [
        {
-           "node_ids": [1],
+           "node_ids": [1, 2],
            "timestamp": "2020-01-01 12:00:00"
        }
     ]
