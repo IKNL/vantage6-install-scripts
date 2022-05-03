@@ -2,11 +2,18 @@
     "actions": [
         {
             "description": "Install vantage6",
-            "command": "vantage6.sh"
+            "command": "vantage6.sh",
+            "id": 1
         },
         {
             "description": "Configure the node",
-            "command": "configure-node.sh"
+            "command": "configure-node.sh",
+            "id": 2
+        },
+        {
+            "description": "Reboot",
+            "command": "reboot.sh 3",
+            "id": 3
         }
     ],
     "restart":

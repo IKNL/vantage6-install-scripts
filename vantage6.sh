@@ -88,17 +88,3 @@ if ! id -nG $LOGNAME | grep -qw docker; then
     echo "Adding log to docker group" | tee -a $REPORT
     usermod -aG docker $LOGNAME 2>&1 | tee -a $REPORT
 fi
-
-## Reboot ##
-echo '### Rebooting system in 10 seconds to finalize changes...'
-for i in {10..1..1}
-    do
-        echo -en "\rRebooting in $i seconds .. "
-        if [ $i -eq 1 ]
-        then
-            echo -en "\rRebooting in $i second ..   "
-        fi
-        sleep 1
-    done
-echo -en "\rBye bye.                       "
-reboot

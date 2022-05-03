@@ -11,7 +11,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ACTIONS_JSON="${SCRIPT_DIR}/actions.json"
 
 LOG_DIR="${SCRIPT_DIR}/log"
-ACTIONS_LOG="${LOG_DIR}/actions_performed.v6"
 LAST_RESTART="${LOG_DIR}/last_restart.v6"
 NODE_ID_FILE="${LOG_DIR}/node_id.v6"
 REPORT="${LOG_DIR}/vantage6-update-report.txt"
@@ -56,25 +55,21 @@ for action in `echo "$actions" | jq -r '.[] | @base64'`; do
     # encoding/decoding base64 is to prevent issues with spaces in the variables
     # sed is used to delete double quotes around script names
     descr=`echo "$action" | base64 --decode | jq '.description'`
+    id=`echo "$action" | base64 --decode | jq '.id'`
     command=`echo "$action" | base64 --decode | jq '.command' |
              sed -e 's/^"//' -e 's/"$//'`
     # TODO maybe include a timestamp here? That would make it easier to do
     # certain actions a number of times
-    if `grep -q "$command" $ACTIONS_LOG`; then
+    if `grep -q "${id}:${command}" $ACTIONS_LOG`; then
         echo "Skipping action that has already been executed: ${descr}" | tee -a $REPORT
         continue
     fi
 
     echo "Executing action: ${descr}" | tee -a $REPORT
     bash "${SCRIPT_DIR}/$command"  #TODO test with arguments to the script
-
-    # Add command to completed actions if it succeeded
+    # Add to completed actions if it succeeded
     status=$?
-    if [ $status -eq 0 ]; then
-        echo "$command" >> $ACTIONS_LOG
-    else
-        echo "ERROR: Command \"$command\" failed!"
-    fi
+    add_action $command $status $id
 done
 
 # Execute restarts
