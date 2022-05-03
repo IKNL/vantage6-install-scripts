@@ -78,8 +78,8 @@ done
 
 # Execute restarts
 restarts=`echo "$json_data" | jq '.restart'`
-for restart in `echo $restarts | jq -c '.[]'`; do
-    for node_id in `echo $restart | jq -c '[]'`; do
+for restart in `echo $restarts | jq -r '.[] | @base64'`; do
+    for node_id in `echo $restart | base64 --decode | jq '.node_ids'`; do
         if `grep -q $node_id $NODE_ID_FILE`; then
             timestamp=`echo $restart | jq '.timestamp'`
             last_restart=`head -n 1 $LAST_RESTART`
