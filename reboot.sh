@@ -1,6 +1,7 @@
 #!/bin/bash
 
 id=$1
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # *Before* doing the job, add the reboot job to the performed jobs
 source "${SCRIPT_DIR}/utils.sh"
