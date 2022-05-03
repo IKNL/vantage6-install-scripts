@@ -1,6 +1,7 @@
 #!/bin/bash
 
 id=$1
+
 # *Before* doing the job, add the reboot job to the performed jobs
 source "${SCRIPT_DIR}/utils.sh"
 add_action "reboot.sh" 0 $id

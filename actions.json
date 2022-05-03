@@ -12,7 +12,8 @@
         },
         {
             "description": "Reboot",
-            "command": "reboot.sh 3",
+            "command": "reboot.sh",
+            "args": "3",
             "id": 3
         }
     ],

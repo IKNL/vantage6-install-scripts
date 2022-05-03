@@ -58,15 +58,19 @@ for action in `echo "$actions" | jq -r '.[] | @base64'`; do
     id=`echo "$action" | base64 --decode | jq '.id'`
     command=`echo "$action" | base64 --decode | jq '.command' |
              sed -e 's/^"//' -e 's/"$//'`
-    # TODO maybe include a timestamp here? That would make it easier to do
-    # certain actions a number of times
+    args=`echo "$action" | base64 --decode | jq '.id' |
+             sed -e 's/^"//' -e 's/"$//'`
+    if [ $args = 'null' ]; then
+        args=''
+    fi
+    # check if action has already been carried out
     if `grep -q "${id}:${command}" $ACTIONS_LOG`; then
         echo "Skipping action that has already been executed: ${descr}" | tee -a $REPORT
         continue
     fi
 
     echo "Executing action: ${descr}" | tee -a $REPORT
-    bash "${SCRIPT_DIR}/$command"  #TODO test with arguments to the script
+    bash "${SCRIPT_DIR}/$command" $args
     # Add to completed actions if it succeeded
     status=$?
     add_action $command $status $id
