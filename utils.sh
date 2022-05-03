@@ -18,5 +18,6 @@ add_action(){
         echo "${id}:${command} ${datetime}" >> $ACTIONS_LOG
     else
         echo "ERROR: Command \"${command}\" failed!"
+        exit 0
     fi
 }
