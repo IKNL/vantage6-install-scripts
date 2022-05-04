@@ -18,7 +18,7 @@ application:
   server_url: https://starter.vantage6.ai
   task_dir: ${TASK_DIR}
   allowed_images:
-    - ^harbor.vantage6.ai/starter/*
+    - ^harbor2.vantage6.ai/starter/*
 environments:
   acc: {}
   dev: {}
