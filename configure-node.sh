@@ -7,12 +7,6 @@ echo "> Creating directory to store configuration and task-data"
 mkdir -p $OUTPUT_DIR
 mkdir -p $TASK_DIR
 
-echo "> Creating dummy data file"
-touch $DATA_FILE
-echo 'Sex,Age' >> $DATA_FILE
-echo 'm,21' >> $DATA_FILE
-echo 'f,19' >> $DATA_FILE
-
 echo "> Please enter your API KEY:"
 read API_KEY
 
