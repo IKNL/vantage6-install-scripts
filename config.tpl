@@ -17,6 +17,8 @@ application:
   port: '443'
   server_url: https://starter.vantage6.ai
   task_dir: ${TASK_DIR}
+  allowed_images:
+    - ^harbor.vantage6.ai/starter/*
 environments:
   acc: {}
   dev: {}
