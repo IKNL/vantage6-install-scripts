@@ -88,3 +88,8 @@ if ! id -nG $LOGNAME | grep -qw docker; then
     echo "Adding log to docker group" | tee -a $REPORT
     usermod -aG docker $LOGNAME 2>&1 | tee -a $REPORT
 fi
+
+# add git config as safe directory
+if ! `git config --list | grep -q "safe.directory=${HOME}/vantage6-install-scripts"` ]; then
+    git config --global --add safe.directory $HOME/vantage6-install-scripts
+fi
