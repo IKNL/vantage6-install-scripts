@@ -84,8 +84,8 @@ for restart in `echo $restarts | jq -r '.[] | @base64'`; do
     node_ids=`echo $restart | base64 --decode | jq -c '.node_ids'`
     for node_id in `echo $node_ids | jq -c '.[]'`; do
         if `grep -qw "$node_id" $NODE_ID_FILE`; then
-            timestamp=`echo $restart | base64 --decode | jq '.timestamp'
-                | sed -e 's/^"//' -e 's/"$//'`
+            timestamp=`echo $restart | base64 --decode | jq '.timestamp' |
+                sed -e 's/^"//' -e 's/"$//'`
             last_restart=`head -n 1 $LAST_RESTART`
             # check if node has already restarted since requested restart
             if [ ! -z "$last_restart" ] || [ "$timestamp" \> "$last_restart" ]; then
