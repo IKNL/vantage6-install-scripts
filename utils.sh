@@ -1,3 +1,5 @@
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LOG_DIR="${SCRIPT_DIR}/log"
 ACTIONS_LOG="${LOG_DIR}/actions_performed.v6"
 
 
