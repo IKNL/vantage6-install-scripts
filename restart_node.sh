@@ -1,4 +1,4 @@
 #!/bin/bash
 
-./stop-node.sh
-./start-node.sh
+bash stop-node.sh
+bash start-node.sh

@@ -12,6 +12,7 @@ source ~/miniconda/etc/profile.d/conda.sh
 conda activate vantage6
 
 ## stopping the node ##
+echo "Stopping node..."
 vnode stop --name starter_head_and_neck
 
 vnode list

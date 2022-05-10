@@ -16,6 +16,7 @@ source ~/miniconda/etc/profile.d/conda.sh
 conda activate vantage6
 
 ## starting the node ##
+echo "Starting node..."
 vnode start --config starter_head_and_neck.yaml
 
 vnode list
