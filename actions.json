@@ -15,6 +15,11 @@
             "command": "reboot.sh",
             "args": "3",
             "id": 3
+        },
+        {
+            "description": "Start the node",
+            "command": "start-node.sh",
+            "id": 4
         }
     ],
     "restart":
