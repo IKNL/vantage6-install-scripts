@@ -25,6 +25,8 @@ touch $ACTIONS_LOG
 touch $REPORT
 touch $LAST_RESTART
 touch $NODE_ID_FILE
+# ensure files are read/writeable by all
+chmod 666 $ACTIONS_LOG $REPORT $LAST_RESTART $NODE_ID_FILE
 
 # Pull git
 git checkout main 2>&1 | tee -a $REPORT
