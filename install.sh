@@ -26,15 +26,15 @@ touch $REPORT
 touch $LAST_RESTART
 touch $NODE_ID_FILE
 
-# Pull git and check if there are differences in actions.json before and after
+# Pull git
 git checkout main 2>&1 | tee -a $REPORT
-old_id=$(git rev-parse HEAD:actions.json)
+# old_id=$(git rev-parse HEAD:actions.json)
 git pull origin main 2>&1 | tee -a $REPORT
-new_id=$(git rev-parse HEAD:actions.json)
-if [ "$old_id" = "$new_id" ]; then
-    echo "No new actions required. Exiting..." | tee -a $REPORT
-    exit 0
-fi
+# new_id=$(git rev-parse HEAD:actions.json)
+# if [ "$old_id" = "$new_id" ]; then
+#     echo "No new actions required. Exiting..." | tee -a $REPORT
+#     exit 0
+# fi
 
 # install json reading tool if not installed yet
 if ! command_exists jq; then
