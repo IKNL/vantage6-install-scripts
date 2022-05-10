@@ -8,7 +8,7 @@
 #######################################
 
 VENV=vantage6
-VANTAGE6_VERSION=2.1.1  # TODO input arg?
+VANTAGE6_VERSION=2.3.4
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOGNAME="$(logname)"
 REPORT=vantage6-installation-report.txt
@@ -37,6 +37,7 @@ if ! command_exists conda; then
 else
     echo "(2/6) ### Skipping Miniconda installation (already installed)" | tee -a $REPORT
 fi
+echo "" | tee -a $REPORT
 
 # activate conda in this shell
 echo "Initializing conda..." | tee -a $REPORT
