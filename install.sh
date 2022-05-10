@@ -88,7 +88,7 @@ for restart in `echo $restarts | jq -r '.[] | @base64'`; do
                 sed -e 's/^"//' -e 's/"$//'`
             last_restart=`head -n 1 $LAST_RESTART`
             # check if node has already restarted since requested restart
-            if [ ! -z "$last_restart" ] || [ "$timestamp" \> "$last_restart" ]; then
+            if [ ! -e "$LAST_RESTART" ] || [ "$timestamp" \> "$last_restart" ]; then
                 echo "Restarting node..." | tee -a $REPORT
                 # restart node
                 bash restart_node.sh
