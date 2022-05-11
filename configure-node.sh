@@ -6,7 +6,11 @@ DATA_FILE="$DATA_DIR/default.csv"
 
 # create data directory and file if they don't exist
 mkdir -p $DATA_DIR
-touch $DATA_FILE
+if [ ! -f $DATA_FILE ]; then
+    echo 'Sex,Age' > $DATA_FILE
+    echo 'm,21' >> $DATA_FILE
+    echo 'f,19' >> $DATA_FILE
+fi
 
 echo "> Creating directory to store configuration and task-data"
 mkdir -p $OUTPUT_DIR
