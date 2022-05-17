@@ -1,7 +1,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OUTPUT_DIR="$HOME/.config/vantage6/node"
 TASK_DIR="$HOME/.local/share/vantage6/node/starter_head_and_neck"
-DATA_DIR="$HOME/data"
+DATA_DIR="/data"
 DATA_FILE="$DATA_DIR/default.csv"
 
 echo "> Creating directory to store configuration and task-data"
@@ -10,11 +10,13 @@ mkdir -p $TASK_DIR
 
 # create data directory and file if they don't exist
 mkdir -p $DATA_DIR
+chmod -R 777 $DATA_DIR
 if [ ! -f $DATA_FILE ]; then
     echo 'Sex,Age' > $DATA_FILE
     echo 'm,21' >> $DATA_FILE
     echo 'f,19' >> $DATA_FILE
 fi
+chmod 766 $DATA_FILE
 
 echo "> Please enter your API KEY:"
 read API_KEY
