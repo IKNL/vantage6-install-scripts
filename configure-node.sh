@@ -21,6 +21,9 @@ chmod 766 $DATA_FILE
 echo "> Please enter your API KEY:"
 read API_KEY
 
+# trim whitespace
+API_KEY=`echo ${API_KEY} | xargs`
+
 echo "> Parsing & saving configuration file"
 export API_KEY=$API_KEY
 export DATA_FILE=$DATA_FILE
