@@ -31,7 +31,9 @@ echo "STEP 3/6"
 echo "R packages installing..."
 echo "...this may take time..."
 #Devtools
-sudo su - -c "R -e \"install.packages('https://cran.r-project.org/src/contrib/Archive/devtools/devtools_2.4.2.tar.gz', repos = NULL, type = 'source')\"" &>> $REPORT
+#sudo su - -c "R -e \"install.packages('https://cran.r-project.org/src/contrib/Archive/devtools/devtools_2.4.2.tar.gz', repos = NULL, type = 'source')\"" &>> $REPORT
+sudo su - -c "R -e \"install.packages('devtools', repos='http://cran.rstudio.com/')\"" &>> $REPORT
+
 echo "...still in progress..."
 #Packages needed by DQ scripts
 sudo su - -c "R -e \"devtools::install_version('REDCapR', version = '1.0.0', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
@@ -56,6 +58,7 @@ sudo add-apt-repository -y ppa:cran/poppler &>> $REPORT
 sudo apt-get update &>> $REPORT
 sudo apt-get install -y libpoppler-cpp-dev &>> $REPORT
 sudo su - -c "R -e \"devtools::install_version('rjson', version = '0.2.20', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
+echo "...still in progress..."
 sudo su - -c "R -e \"devtools::install_version('readtext', version = '0.81', repos = 'http://cran.us.r-project.org')\"" &>> $REPORT
 echo "...R packages installed."
 
