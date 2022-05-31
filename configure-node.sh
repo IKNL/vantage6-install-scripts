@@ -22,7 +22,7 @@ echo "> Please enter your API KEY:"
 read API_KEY
 
 # trim whitespace
-API_KEY=`echo ${API_KEY} | xargs`
+API_KEY="$(echo -e "${API_KEY}" | tr -d '[:space:]')"
 
 echo "> Parsing & saving configuration file"
 export API_KEY=$API_KEY
