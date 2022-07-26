@@ -21,6 +21,22 @@ read RC_TOKEN
 export RC_TOKEN=$RC_TOKEN
 echo "REDCap token: $RC_TOKEN"
 
+ERROR="curl: (60) SSL certificate problem: unable to get local issuer certificate"
+CHECK=$(curl $API_URI 2>&1 | grep "$ERROR")
+
+if [ "$CHECK" = "$ERROR" ]; then
+        echo ""
+        echo "Please enter the path to REDCap URI chain certicate file (.crt extension):"
+        echo "If you can't do this now, please skip the step by pressing ENTER and contact the support team."
+        read CERTIFICATE_PATH
+        export CERTIFICATE_PATH=$CERTIFICATE_PATH
+        echo "Certificate Path: $CERTIFICATE_PATH"
+        if [ -f "$CERTIFICATE_PATH" ]; then
+            cp "$CERTIFICATE_PATH" /usr/local/share/ca-certificates/
+            sudo update-ca-certificates
+        fi
+fi
+
 BIOMDIR=$(dirname "$0")
 #cp $BIOMDIR/proto_config.properties $BIOMDIR/config.properties
 envsubst < $BIOMDIR/proto_config.properties > $BIOMDIR/config.properties
