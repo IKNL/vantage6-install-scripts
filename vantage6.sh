@@ -71,6 +71,8 @@ if ! command_exists docker; then
     # installer script downloaded from: https://get.docker.com/
     chmod +x $SCRIPT_DIR/get-docker.sh
     $SCRIPT_DIR/get-docker.sh 2>&1 | tee -a $REPORT
+    chmod 755 /var/lib/docker /var/lib/docker/volumes /var/lib/docker/volumes/vantage6-starter_head_and_neck-user-vol
+    chmod 777 -R /var/lib/docker/volumes/vantage6-starter_head_and_neck-user-vol/_data
 else
     echo "Docker is already installed!" | tee -a $REPORT
 fi
