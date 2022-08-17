@@ -103,7 +103,7 @@ echo '(7/7) ### Add crontab to reset vantage6 docker folder permissions on reboo
 current_crontab="/tmp/my_current.crontab"
 crontab -l > $current_crontab
 # sleep 30 seconds to prevent racing condition with Docker startup
-echo "@reboot sleep 30 && $SCRIPT_DIR/set_docker_folder_permissions.sh" >> $current_crontab
+echo "@reboot sleep 30 && bash $SCRIPT_DIR/set_docker_folder_permissions.sh" >> $current_crontab
 crontab $current_crontab
 rm $current_crontab
 
