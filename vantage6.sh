@@ -24,7 +24,7 @@ touch $REPORT
 
 ## Update packages and Upgrade system
 echo "" | tee -a $REPORT
-echo '(1/6) ### Update/upgrade system' | tee -a $REPORT
+echo '(1/7) ### Update/upgrade system' | tee -a $REPORT
 echo "" | tee -a $REPORT
 apt-get update -y 2>&1 | tee -a $REPORT
 apt-get upgrade -y 2>&1 | tee -a $REPORT
@@ -32,7 +32,7 @@ apt-get install systemd -y 2>&1 | tee -a $REPORT
 
 echo "" | tee -a $REPORT
 if ! command_exists conda; then
-    echo '(2/6) ### Installing miniconda' | tee -a $REPORT
+    echo '(2/7) ### Installing miniconda' | tee -a $REPORT
     # installer script downloaded from:
     # curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o ~/miniconda.sh
     # add execution permissions
@@ -40,7 +40,7 @@ if ! command_exists conda; then
     # install miniconda
     bash $SCRIPT_DIR/get-miniconda.sh -b -p $HOME/miniconda 2>&1 | tee -a $REPORT
 else
-    echo "(2/6) ### Skipping Miniconda installation (already installed)" | tee -a $REPORT
+    echo "(2/7) ### Skipping Miniconda installation (already installed)" | tee -a $REPORT
 fi
 echo "" | tee -a $REPORT
 
@@ -52,33 +52,31 @@ conda init 2>&1 | tee -a $REPORT
 echo "" | tee -a $REPORT
 
 if ! has_conda_env ".*$VENV.*"; then
-    echo '(3/6) ### Creating a virtual environment' | tee -a $REPORT
+    echo '(3/7) ### Creating a virtual environment' | tee -a $REPORT
     # create python virtual environment with python 3.7!
     conda create -n $VENV python=3.7 -y 2>&1 | tee -a $REPORT
 else
-    echo "(3/6) ### Using existing virtual environment $VENV" | tee -a $REPORT
+    echo "(3/7) ### Using existing virtual environment $VENV" | tee -a $REPORT
 fi
 # activate environment
 conda activate $VENV
 
 ## vantage6 ##
-echo "(4/6) ### Installing vantage6 ${VANTAGE6_VERSION}.." | tee -a $REPORT
+echo "(4/7) ### Installing vantage6 ${VANTAGE6_VERSION}.." | tee -a $REPORT
 pip install vantage6==$VANTAGE6_VERSION 2>&1 | tee -a $REPORT
 
 ## Docker ##
 if ! command_exists docker; then
-    echo '(5/6) ### Installing Docker..' | tee -a $REPORT
+    echo '(5/7) ### Installing Docker..' | tee -a $REPORT
     # installer script downloaded from: https://get.docker.com/
     chmod +x $SCRIPT_DIR/get-docker.sh
     $SCRIPT_DIR/get-docker.sh 2>&1 | tee -a $REPORT
-    chmod 755 /var/lib/docker /var/lib/docker/volumes /var/lib/docker/volumes/vantage6-starter_head_and_neck-user-vol
-    chmod 777 -R /var/lib/docker/volumes/vantage6-starter_head_and_neck-user-vol/_data
 else
     echo "Docker is already installed!" | tee -a $REPORT
 fi
 
 # Manage Docker as a non-root user
-echo '(6/6) ### Manage Docker as a non-root user..' | tee -a $REPORT
+echo '(6/7) ### Manage Docker as a non-root user..' | tee -a $REPORT
 # Create the docker group
 if [ ! $(getent group docker) ]; then
     echo "Group docker added" | tee -a $REPORT
@@ -96,6 +94,18 @@ if ! id -nG $LOGNAME | grep -qw docker; then
     echo "Adding log to docker group" | tee -a $REPORT
     usermod -aG docker $LOGNAME 2>&1 | tee -a $REPORT
 fi
+
+## Add a root crontab to reset permissions on the vantage6 docker volumes after
+## reboot. This is necessary because docker resets the permissions on startup
+## and we are then not able to make new Redcap data available to a running
+## Docker container.
+echo '(7/7) ### Add crontab to reset vantage6 docker folder permissions on reboot'
+current_crontab="/tmp/my_current.crontab"
+crontab -l > $current_crontab
+# sleep 30 seconds to prevent racing condition with Docker startup
+echo "@reboot sleep 30 && $SCRIPT_DIR/set_docker_folder_permissions.sh" >> $current_crontab
+crontab $current_crontab
+rm $current_crontab
 
 ## Reboot ##
 echo '###Rebooting system in 10 seconds.'
