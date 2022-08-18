@@ -15,3 +15,5 @@ conda activate vantage6
 vnode start --config starter_head_and_neck.yaml
 
 vnode list
+
+docker cp /data/. vantage6-starter_head_and_neck-user:/mnt/data
