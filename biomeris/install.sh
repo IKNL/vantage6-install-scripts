@@ -33,6 +33,9 @@ echo "STEP 3/7"
 echo "R packages installing..."
 echo "...this may take time..."
 
+#Increase download timeout
+sudo su - -c "R -e \"options(timeout = max(1000, getOption("timeout")))\"" &>> $REPORT
+
 #Remotes
 sudo su - -c "R -e \"install.packages('https://cran.r-project.org/src/contrib/Archive/remotes/remotes_2.4.1.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)\"" &>> $REPORT
 
