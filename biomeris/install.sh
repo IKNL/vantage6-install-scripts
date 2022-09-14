@@ -19,6 +19,7 @@ sudo apt-get -y install r-base libapparmor1 libcurl4-gnutls-dev libxml2-dev libs
 sudo apt-get -y install libcairo2-dev &>> $REPORT
 sudo apt-get -y install libxt-dev &>> $REPORT
 sudo apt-get -y install git-core &>> $REPORT
+sudo apt-get -y install curl &>> $REPORT
 
 sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024 &>> $REPORT
 sudo /sbin/mkswap /var/swap.1 &>> $REPORT
