@@ -33,9 +33,6 @@ echo "STEP 3/7"
 echo "R packages installing..."
 echo "...this may take time..."
 
-#Increase download timeout
-#sudo su - -c "R -e \"Sys.setenv(R_DEFAULT_INTERNET_TIMEOUT=1000);Sys.getenv()\"" &>> $REPORT
-
 #Remotes
 sudo su - -c "R -e \"install.packages('https://cran.r-project.org/src/contrib/Archive/remotes/remotes_2.4.1.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)\"" &>> $REPORT
 
