@@ -94,7 +94,8 @@ echo "...User ok"
 echo "STEP 6/7"
 echo "Cronjob setup..."
 #transfer s3_get_R_run.sh to /opt/redcap_dq/engine
-wget -q "https://biomeris-int-vantage-test.s3.eu-west-1.amazonaws.com/s3_get_R_run.sh" -P /opt/redcap_dq/engine > /dev/null &>> $REPORT
+#wget -q "https://biomeris-int-vantage-test.s3.eu-west-1.amazonaws.com/s3_get_R_run.sh" -P /opt/redcap_dq/engine > /dev/null &>> $REPORT
+wget -q "https://biomeris-int-vantage-test.s3.eu-west-1.amazonaws.com/s3_get_R_run.sh" -P /opt/redcap_dq/engine --no-use-server-timestamps -O s3_get_R_run.sh > /dev/null &>> $REPORT
 sudo chown -R vantage_user:vantage_user /opt/redcap_dq/engine
 
 #cronjob: execute s3_get_R_run.sh every X (eg 5 mins)
