@@ -94,6 +94,7 @@ echo "...User ok"
 echo "STEP 6/7"
 echo "Cronjob setup..."
 
+sudo groupadd docker
 sudo usermod -aG docker vantage_user
 
 #transfer s3_get_R_run.sh to /opt/redcap_dq/engine
