@@ -3,7 +3,7 @@ service cron stop
 echo "CRON Service stopped"
 echo "\nPrevious crontab file:\n"
 cat /etc/crontab
-sed -i 's/30 \* \* \* \* vantage_user/* * * * * vantage_user/' /etc/crontab
+sed -i 's/\*\/30 \* \* \* \* vantage_user/* * * * * vantage_user/' /etc/crontab
 echo "\nNew crontab file:\n"
 cat /etc/crontab
 service cron start
