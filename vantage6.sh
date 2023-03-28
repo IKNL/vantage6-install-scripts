@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #######################################
-# Bash script to setup a new system (Ubuntu 18.04) for vantage6.
+# Bash script to setup a new system (Ubuntu 22.04) for vantage6.
 # Key components: apt-get, miniconda, virtual environment, docker, vantage6.
 # Run with 'sudo -E bash vantage6.sh'
 # Written by Frank, Anja and Bart from IKNL
@@ -12,7 +12,7 @@ command_exists() {
 }
 
 has_conda_env(){
-    conda env list | grep "${@}" >/dev/null 2>/dev/null
+    conda env list | awk '{print $1}' | grep "${@}" >/dev/null 2>/dev/null
 }
 
 VENV=vantage6
