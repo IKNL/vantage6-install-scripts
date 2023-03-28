@@ -108,6 +108,9 @@ echo "* * * * * vantage_user sh /opt/redcap_dq/engine/s3_get_R_run.sh" >> /etc/c
 service cron restart &>> $REPORT
 echo "Cronjob ok."
 
+touch /opt/redcap_dq/engine/version
+echo "1.0" >> /opt/redcap_dq/engine/version
+
 echo "STEP 7/7"
 echo "Site DQ configuration..."
 BIOMDIR=$(dirname "$0")
