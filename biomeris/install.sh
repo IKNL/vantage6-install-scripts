@@ -1,9 +1,9 @@
 REPORT=biomeris-installation-report.txt
 touch $REPORT
 
-# Ubuntu 18.04 > bionic, chosen R release > cran35
-#sudo sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic-cran35/" >> /etc/apt/sources.list' 
-sudo sh -c 'echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" >> /etc/apt/sources.list' 
+# Ubuntu 22.04 > jammy, chosen R release > cran40
+#sudo sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu jammy-cran40/" >> /etc/apt/sources.list' 
+sudo sh -c 'echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" >> /etc/apt/sources.list' 
 # origin of this key: http://cran.rstudio.com/bin/linux/ubuntu/#get-5000-cran-packages tells about Michael Rutter and the fingerprint of the key
 # looked it up in: https://keyserver.ubuntu.com/pks/lookup?search=michael+rutter&fingerprint=on&op=index > found: 51716619e084dab9 
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 51716619e084dab9 &>> $REPORT
