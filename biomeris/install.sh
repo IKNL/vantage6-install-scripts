@@ -56,8 +56,8 @@ sudo su - -c "R -e \"remotes::install_version('formattable', version = '0.2.1', 
 echo "...still in progress..."
 sudo su - -c "R -e \"remotes::install_version('gtools', version = '3.9.2', repos = 'https://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
-sudo add-apt-repository -y ppa:cran/poppler &>> $REPORT
-sudo apt-get update &>> $REPORT
+#sudo add-apt-repository -y ppa:cran/poppler &>> $REPORT
+#sudo apt-get update &>> $REPORT
 sudo apt-get install -y libpoppler-cpp-dev &>> $REPORT
 sudo su - -c "R -e \"remotes::install_version('rjson', version = '0.2.20', repos = 'https://cran.us.r-project.org')\"" &>> $REPORT
 echo "...still in progress..."
