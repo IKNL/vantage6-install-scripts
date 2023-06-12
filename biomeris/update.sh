@@ -1,4 +1,7 @@
 if grep -q "1.0" /opt/redcap_dq/engine/version; then
+    REPORT=biomeris-installation-report_1.0-to-1.1.txt
+	touch $REPORT
+    
     sudo su - -c "R -e \"remotes::install_version('REDCapR', version = '1.0.0', repos = 'https://cloud.r-project.org')\"" &>> $REPORT
     echo "...still in progress..."
     sudo su - -c "R -e \"remotes::install_version('plyr', version = '1.8.6', repos = 'https://cloud.r-project.org')\"" &>> $REPORT
