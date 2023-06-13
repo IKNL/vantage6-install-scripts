@@ -1,4 +1,7 @@
 if grep -q "1.0" /opt/redcap_dq/engine/version; then
+	echo "R packages installing..."
+	echo "...this may take time..."
+
     REPORT=biomeris-installation-report_1.0-to-1.1.txt
     touch $REPORT
     
