@@ -31,3 +31,4 @@ if grep -q "1.0" /opt/redcap_dq/engine/version; then
     echo "1.1_updated" >> /opt/redcap_dq/engine/version
 else
 	echo "No update available"
+	
