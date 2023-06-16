@@ -1,9 +1,11 @@
-if grep -q "1.0" /opt/redcap_dq/engine/version; then
-	echo "R packages installing..."
-	echo "...this may take time..."
+VERSION="1.2"
+VERSION_FILE=/opt/redcap_dq/engine/version
+VERSION_HISTORY_FILE=/opt/redcap_dq/engine/version_history
 
-    REPORT=biomeris-installation-report_1.0-to-1.1.txt
-    touch $REPORT
+update10to11() 
+{
+    echo "R packages installing..."
+    echo "...this may take time..."
     
     sudo su - -c "R -e \"remotes::install_version('REDCapR', version = '1.0.0', repos = 'https://cloud.r-project.org')\"" &>> $REPORT
     echo "...still in progress..."
@@ -30,8 +32,50 @@ if grep -q "1.0" /opt/redcap_dq/engine/version; then
     echo "...still in progress..."
     sudo su - -c "R -e \"remotes::install_version('readtext', version = '0.81', repos = 'https://cloud.r-project.org')\"" &>> $REPORT
     echo "...R packages installed."
+    
+}
 
-    echo "1.1_updated" >> /opt/redcap_dq/engine/version
+update11to12()
+{
+    echo "Removing old s3_get_R_run.sh script"
+    rm /opt/redcap_dq/engine/s3_get_R_run.sh &>> $REPORT
+
+    echo "Downloading new s3_get_R_run.sh script"
+    wget -q "https://biomeris-int-vantage-test.s3.eu-west-1.amazonaws.com/s3_get_R_run.sh" -P /opt/redcap_dq/engine > /dev/null &>> $REPORT
+    sudo chown -R vantage_user:vantage_user /opt/redcap_dq/engine
+}
+
+
+if   grep -q "\b1.0\b" $VERSION_FILE; 
+then
+    REPORT=biomeris-installation-report_1.0-to-$VERSION.txt
+    touch $REPORT
+
+    update10to11
+    update11to12
+
+    echo "1.0\t\tNA"            >> $VERSION_HISTORY_FILE
+    echo $VERSION"\t\t"$(date)  >> $VERSION_HISTORY_FILE
+    echo $VERSION >  $VERSION_FILE
+    
+elif grep -q "\b1.1\b" $VERSION_FILE || grep -q "\b1.1_updated\b" $VERSION_FILE; 
+    REPORT=biomeris-installation-report_1.1-to-$VERSION.txt
+    touch $REPORT
+    
+    update11to12
+    
+    # fix for the already updated version
+    if grep -q "\b1.1\b" $VERSION_FILE;
+    then
+        echo "1.1\t\tNA" >> $VERSION_HISTORY_FILE
+    else
+        echo "1.0\t\tNA" >> $VERSION_HISTORY_FILE
+        echo "1.1\t\tNA" >> $VERSION_HISTORY_FILE
+    fi
+
+    echo $VERSION"\t\t"$(date) >> $VERSION_HISTORY_FILE
+    echo $VERSION >  $VERSION_FILE
+
 else
 	echo "No update available"
 fi
