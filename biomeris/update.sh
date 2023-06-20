@@ -59,6 +59,7 @@ then
     echo $VERSION >  $VERSION_FILE
     
 elif grep -q "\b1.1\b" $VERSION_FILE || grep -q "\b1.1_updated\b" $VERSION_FILE; 
+then
     REPORT=biomeris-installation-report_1.1-to-$VERSION.txt
     touch $REPORT
     
