@@ -1,4 +1,4 @@
-VERSION="1.2"
+VERSION="1.3"
 REPORT=biomeris-installation-report.txt
 touch $REPORT
 
@@ -9,12 +9,12 @@ sudo sh -c 'echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/
 # looked it up in: https://keyserver.ubuntu.com/pks/lookup?search=michael+rutter&fingerprint=on&op=index > found: 51716619e084dab9 
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 51716619e084dab9 &>> $REPORT
 
-echo "STEP 1/7"
+echo "STEP 1/8"
 echo "OS updating..."
 sudo apt-get update &>> $REPORT
 echo "...OS updated."
 
-echo "STEP 2/7"
+echo "STEP 2/8"
 echo "R installing..."
 sudo apt-get -y install r-base libapparmor1 libcurl4-gnutls-dev libxml2-dev libssl-dev gdebi-core &>> $REPORT
 sudo apt-get -y install libcairo2-dev &>> $REPORT
@@ -30,7 +30,7 @@ echo "/var/swap.1 swap swap defaults 0 0 " >> /etc/fstab
 echo "...R installed."
 
 
-echo "STEP 3/7"
+echo "STEP 3/8"
 echo "R packages installing..."
 echo "...this may take time..."
 
@@ -65,7 +65,7 @@ echo "...still in progress..."
 sudo su - -c "R -e \"remotes::install_version('readtext', version = '0.81', repos = 'https://cloud.r-project.org')\"" &>> $REPORT
 echo "...R packages installed."
 
-echo "STEP 4/7"
+echo "STEP 4/8"
 echo "Environment setup..."
 mkdir /opt/redcap_dq
 mkdir /opt/redcap_dq/environment
@@ -83,7 +83,7 @@ touch /opt/redcap_dq/environment/logs/history.txt
 mkdir /opt/redcap_dq/engine
 echo "...Environment ok"
 
-echo "STEP 5/7"
+echo "STEP 5/8"
 echo "Creting user vantage_user and giving permissions on working directories..."
 sudo useradd -m vantage_user
 sudo chown -R vantage_user:vantage_user /opt/redcap_dq/environment
@@ -92,7 +92,7 @@ sudo chmod -R 777 /var/lib/docker/volumes/vantage6-starter_head_and_neck-user-vo
 sudo chmod -R 777 /data
 echo "...User ok"
 
-echo "STEP 6/7"
+echo "STEP 6/8"
 echo "Cronjob setup..."
 
 sudo groupadd docker
@@ -112,10 +112,16 @@ echo "Cronjob ok."
 echo $VERSION > /opt/redcap_dq/engine/version
 echo $VERSION"\t\t"$(date) > /opt/redcap_dq/engine/version_history
 
-echo "STEP 7/7"
+echo "STEP 7/8"
 echo "Site DQ configuration..."
 BIOMDIR=$(dirname "$0")
 bash $BIOMDIR/config.sh
+
+echo "STEP 8/8"
+echo "R packages version log..."
+sudo Rscript $BIOMDIR/r_installation_report.R
+echo "...done"
+
 echo "Site DQ configured"
 echo ""
 echo ""
