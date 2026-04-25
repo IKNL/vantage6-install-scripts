@@ -20,18 +20,34 @@ KEEP_ID="$(docker image inspect --format '{{.Id}}' "$KEEP")"
 : > "$LOG_FILE"
 echo "Keeping: $KEEP sha=$KEEP_ID dry_run=$DRY_RUN" | tee -a "$LOG_FILE"
 
+image_refs_for_id() {
+  local image_id="$1"
+
+  docker image ls --no-trunc --format '{{.Repository}}:{{.Tag}} {{.ID}}' \
+    | awk -v id="$image_id" '$2==id {print $1}' \
+    | paste -sd ',' -
+}
+
 # Remove docker files
 docker image ls -aq | sort -u | while read -r id; do
-  [[ "$id" == "$KEEP_ID" ]] && continue
-  refs="$(
-    docker image ls --no-trunc --format '{{.Repository}}:{{.Tag}} {{.ID}}' \
-    | awk -v id="$id" '$2==id {print $1}' \
-    | paste -sd ',' -
-  )"
-  [[ -z "${refs:-}" ]] && refs="<none>"
-  echo "Deleting: sha=$id refs=$refs" | tee -a "$LOG_FILE"
-  if [[ "$DRY_RUN" != "1" ]]; then
-    docker rmi -f "$id" >/dev/null || true
+  if [[ "$id" == "$KEEP_ID" ]]; then
+    continue
   fi
 
+  refs="$(image_refs_for_id "$id")"
+  if [[ -z "${refs:-}" ]]; then
+    refs="<none>"
+  fi
+
+  echo "Deleting: sha=$id refs=$refs" | tee -a "$LOG_FILE"
+
+  if [[ "$DRY_RUN" == "0" ]]; then
+    docker rmi -f "$id" >/dev/null || true
+  fi
 done
+
+# Print all images to the logs
+echo "" | tee -a "$LOG_FILE"
+echo "## Image still on the system:" | tee -a "$LOG_FILE"
+docker image ls --no-trunc --format '{{.Repository}}:{{.Tag}} {{.ID}}' | tee -a "$LOG_FILE"
+
