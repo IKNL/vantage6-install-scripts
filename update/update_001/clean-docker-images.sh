@@ -18,8 +18,11 @@ REGISTRY_PREFIX="harbor2.vantage6.ai/"
 # Log which images have been deleted
 LOG_FILE="$SCRIPT_DIR/deleted-images.log"
 DRY_RUN="${DRY_RUN:-0}"   # set DRY_RUN=1 to not delete
-KEEP_ID_RAW="$(docker image inspect --format '{{.Id}}' "$KEEP")"
-KEEP_ID="${KEEP_ID_RAW#sha256:}"
+KEEP_ID_RAW=""
+KEEP_ID=""
+if KEEP_ID_RAW="$(docker image inspect --format '{{.Id}}' "$KEEP" 2>/dev/null)"; then
+  KEEP_ID="${KEEP_ID_RAW#sha256:}"
+fi
 
 : > "$LOG_FILE"
 echo "Keeping: $KEEP sha=$KEEP_ID_RAW dry_run=$DRY_RUN" | tee -a "$LOG_FILE"
@@ -45,11 +48,17 @@ image_refs_for_id_with_prefix() {
 # Remove docker files
 echo "Scanning local image IDs..." | tee -a "$LOG_FILE"
 docker image ls --no-trunc --format '{{.ID}}' | sort -u | while read -r id; do
-  if [[ "$id" == "$KEEP_ID" ]]; then
+  refs_all="$(image_refs_for_id "$id")"
+  if [[ "$refs_all" == *"$KEEP"* ]]; then
+    echo "Keeping: sha=$id refs=$refs_all" | tee -a "$LOG_FILE"
     continue
   fi
 
-  refs_all="$(image_refs_for_id "$id")"
+  if [[ -n "${KEEP_ID:-}" && "$id" == "$KEEP_ID" ]]; then
+    echo "Keeping: sha=$id (matched keep image id)" | tee -a "$LOG_FILE"
+    continue
+  fi
+
   refs_matching_prefix="$(image_refs_for_id_with_prefix "$id" "$REGISTRY_PREFIX")"
   if [[ -z "${refs_matching_prefix:-}" ]]; then
     if [[ -n "${refs_all:-}" ]]; then
