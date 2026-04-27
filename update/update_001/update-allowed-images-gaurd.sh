@@ -15,4 +15,7 @@ if [[ ! -f "$CONFIG_FILE" ]]; then
 fi
 
 # Update the allowed images to ^docker\.io/s102099/*
-sed -i -e 's@\^harbor2\\\.vantage6\\\.ai/starter/[*]@^docker\\\.io/s102099/*@' "$CONFIG_FILE"
+sed -i \
+  -e 's@\^harbor2\\\.vantage6\\\.ai/starter/[*]@^docker\\\.io/s102099/*@' \
+  -e 's@\^harbor2\.vantage6\.ai/starter/[*]@^docker\\\.io/s102099/*@' \
+  "$CONFIG_FILE"
